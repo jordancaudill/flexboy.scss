@@ -1,0 +1,63 @@
+#parent {
+  background: rgba(255, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.child {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-family: Helvetica, sans-serif;
+  color: white;
+  font-weight: 900;
+}
+.child:nth-child(1) {
+  background: linear-gradient(45deg, #4099e0, #4049e0);
+  border: solid 4px #4099e0;
+}
+.child:nth-child(2) {
+  background: linear-gradient(45deg, #4041e0, #8f40e0);
+  border: solid 4px #4041e0;
+}
+.child:nth-child(3) {
+  background: linear-gradient(45deg, #9640e0, #e040da);
+  border: solid 4px #9640e0;
+}
+.child:nth-child(4) {
+  background: linear-gradient(45deg, #e040d3, #e04083);
+  border: solid 4px #e040d3;
+}
+.child:nth-child(5) {
+  background: linear-gradient(45deg, #e0407c, #e05440);
+  border: solid 4px #e0407c;
+}
+.child:nth-child(6) {
+  background: linear-gradient(45deg, #e05c40, #e0ac40);
+  border: solid 4px #e05c40;
+}
+.child:nth-child(7) {
+  background: linear-gradient(45deg, #e0b340, #bde040);
+  border: solid 4px #e0b340;
+}
+.child:nth-child(8) {
+  background: linear-gradient(45deg, #b6e040, #66e040);
+  border: solid 4px #b6e040;
+}
+.child:nth-child(9) {
+  background: linear-gradient(45deg, #5fe040, #40e071);
+  border: solid 4px #5fe040;
+}
+.child:nth-child(10) {
+  background: linear-gradient(45deg, #40e079, #40e0c9);
+  border: solid 4px #40e079;
+}
+
+body {
+  margin: 0;
+}
+
+/*# sourceMappingURL=demo.css.map */

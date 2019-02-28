@@ -1,0 +1,40 @@
+// $breakPoints: (0, 1280, 1600);
+// $breakPointNames: ('', 'md', 'lg');
+// $containerWidths: (600, 900, 1200);
+// @import "../lib/_flex.scss";
+#parent {
+    background: rgba(255, 0, 0, 0.1);
+    margin-top: 30px;
+    // @extend .row,
+    // .col-lg,
+    // .a-center,
+    // .j-between,
+    // .wrap;
+    // @include container("", 800px, 40px);
+    // @include gutter("", 40px);
+}
+.child {
+	$max: 11;
+	$deg: 360 / $max;
+	@for $i from 1 to $max {
+		&:nth-child(#{$i}) {
+			$hue: adjust_hue(turquoise, $i * $deg);
+			background: linear-gradient(45deg, $hue, adjust_hue($hue, 30%));
+			border: solid 4px $hue;
+		}
+	}
+	width: 100px;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+	font-family: Helvetica, sans-serif;
+	color: white;
+	font-weight: 900;
+}
+
+body {
+    margin: 0;
+}

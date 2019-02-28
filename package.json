@@ -1,0 +1,33 @@
+{
+  "name": "flexboy.css",
+  "version": "0.0.1",
+  "description": "A responsive CSS flexbox framework",
+  "main": "index.js",
+  "scripts": {
+    "start": "sass lib/_flex.scss lib/flex.css",
+    "start-demo": "sass demo/demo.scss demo/demo.css"
+  },
+  "keywords": [
+    "flexbox",
+    "flexboy",
+    "flex",
+    "css",
+    "scss",
+    "sass",
+    "library",
+    "framework",
+    "package",
+    "layout",
+    "container",
+    "grid"
+  ],
+  "author": "Jordan Caudill",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "compression": "^1.7.3",
+    "express": "^4.16.4",
+    "node-sass": "^4.11.0",
+    "sass": "^1.17.2"
+  }
+}
