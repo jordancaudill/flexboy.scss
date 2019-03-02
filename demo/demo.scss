@@ -1,21 +1,33 @@
-// $breakPoints: (0, 1280, 1600);
-// $breakPointNames: ('', 'md', 'lg');
-// $containerWidths: (600, 900, 1200);
-// @import "../lib/_flex.scss";
+#controls {
+	display: flex;
+	flex-direction: row;
+	// align-items: center;
 
-label {
-	display: block;
+	.type-section {
+		// background: rgba(0, 0, 255, 0.2);\
+		padding: 10px;
+		.control {
+			height: 40px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-end;
+			label {
+				// display: block;
+				user-select: none;
+				font-family: Helvetica, sans-serif;
+	
+			}	
+			input[type=checkbox] {
+				width: 20px;
+				height: 20px;
+			}
+		}	
+	}	
 }
 #parent {
     background: rgba(255, 0, 0, 0.1);
     margin-top: 30px;
-    // @extend .row,
-    // .col-lg,
-    // .a-center,
-    // .j-between,
-    // .wrap;
-    // @include container("", 800px, 40px);
-    // @include gutter("", 40px);
 }
 .child {
 	$max: 11;
@@ -25,10 +37,11 @@ label {
 			$hue: adjust_hue(turquoise, $i * $deg);
 			background: linear-gradient(45deg, $hue, adjust_hue($hue, 30%));
 			border: solid 4px $hue;
+			width: 100px + ($i * 15);
+			height: 100px - ($i * 7);
+		
 		}
 	}
-	width: 100px;
-	height: 100px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

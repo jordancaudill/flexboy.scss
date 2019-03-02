@@ -6,9 +6,19 @@
 </head>
 
 <body>
+	<section id="breakpoints">
+		<form id="new-breakpoint" onsubmit="addBreakpoint()">
+			<label>New Breakpoint</label>
+			<input placeholder="Breakpoint name (ex: md)" type="text" id="new-breakpoint-name">
+			<input placeholder="Breakpoint width (ex: 1280)" type="number" min="1" id="new-breakpoint-size">
+			<button type="submit">Add</button>
+		</form>
+	</section>
+</section>
+	<section id="controls">
+	</section>
 	<button onclick="deleteChild()">Remove child</button>
 	<button onclick="addChild()">Add child</button>
-	<section id="controls"></section>
 	<section id="parent">
 	</section>
 	<script src="demo.js"></script>

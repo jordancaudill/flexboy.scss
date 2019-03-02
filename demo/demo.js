@@ -11,6 +11,7 @@ const classes = {
 	flex: ['flex', 'flex-at'],
 	only: ['only']
 };
+let breakpoints = {};
 
 function addChild() {
 	if (parent.children.length < 10) {
@@ -30,19 +31,35 @@ function deleteChild() {
 function setupControls() {
 	let controls = document.getElementById("controls");
 	types.forEach(function (type) {
+		let typeSection = document.createElement("div");
+		typeSection .setAttribute("class", 'type-section');
+		controls.appendChild(typeSection);
+
 		classes[type].forEach(function (className) {
+			let control = document.createElement("div");
+			control.setAttribute("class", 'control');
 			let label = document.createElement("label");
 			label.setAttribute("for", className);
 			label.textContent = "." + className;
-			controls.appendChild(label);
+			control.appendChild(label);
 			let input = document.createElement("input");
 			input.addEventListener('change', changeCSS);
 			input.setAttribute("name", className);
 			input.setAttribute("id", className);
 			input.setAttribute("type", "checkbox");
-			controls.appendChild(input);
+			control.appendChild(input);
+			typeSection.appendChild(control);
 		});
 	});
+}
+function setupBreakpoints () {
+	let breakpointsSection = document.getElementById("breakpoints");
+
+
+}
+
+function addBreakpoint () {
+	
 }
 
 function changeCSS() {
