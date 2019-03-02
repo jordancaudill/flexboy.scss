@@ -13,22 +13,22 @@ app.get("/healthcheck", (req, res) => {
 
 app.get("/style.css", (req, res) => {
 	let styleString = "$breakPoints: (0, 1280, 1600);$breakPointNames: ('', 'md', 'lg');$containerWidths: (600, 900, 1200);@import '../lib/_flex.scss';#parent {";
-	if (req.query.extend) {
+	if (req.query.extend.length > 0) {
 		styleString += "@extend " + decodeURIComponent(req.query.extend) + ";";
 	}
-	styleString += "}"
+	styleString += "};"
 	sass.render({
 		data: styleString,
 		outputStyle: 'compressed',
 		includePaths: ['../lib/_flex.scss']
 	}, function (err, result) {
 		if (err) {
-			res.status(400).end(err);
+			res.status(400).send(err);
 		}
 		if (result) {
 			res.status(200).end(result.css);
 		}
-		res.status(400).end();
+		res.status(400).send();
 	});
 });
 app.get("/demo.css", (req, res) => {

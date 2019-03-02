@@ -1,3 +1,6 @@
+label {
+  display: block;
+}
 #parent {
   background: rgba(255, 0, 0, 0.1);
   margin-top: 30px;
