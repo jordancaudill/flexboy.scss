@@ -2,7 +2,7 @@ const express = require("express");
 const compression = require("compression");
 const http = require("http");
 const app = express();
-const port = 8080;
+const port = 8081;
 const sass = require('node-sass');
 
 app.use(compression());

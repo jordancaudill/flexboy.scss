@@ -4,8 +4,7 @@
   "description": "A responsive CSS flexbox framework",
   "main": "index.js",
   "scripts": {
-    "start": "sass lib/_flex.scss lib/flex.css",
-    "start-demo": "sass demo/demo.scss demo/demo.css"
+    "start": "sass lib/_flex.scss lib/flex.css"
   },
   "keywords": [
     "flexbox",
