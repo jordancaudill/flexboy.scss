@@ -38,3 +38,10 @@ padding: 40px;
 // @mixin gutter($amount, $breakPointName)
 @include gutter(20px, md);
 ```
+
+### Run the demo
+```sh
+cd demo
+npm install
+node server.js
+```
