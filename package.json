@@ -1,6 +1,6 @@
 {
   "name": "flexboy.scss",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A responsive SCSS flexbox framework",
   "main": "flexboy.scss",
   "scripts": {},
