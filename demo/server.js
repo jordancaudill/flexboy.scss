@@ -34,7 +34,7 @@ app.get("/style.css", (req, res) => {
 app.use("/js", express.static(__dirname + "/dist/js"));
 app.use("/css", express.static(__dirname + "/dist/css"));
 app.get("/*", (req, res) => {
-	res.sendFile("./index.html", { root: __dirname });
+	res.sendFile("./dist/index.html", { root: __dirname });
 });
 
 let server = http.createServer(app).listen(port, () => {
