@@ -25,7 +25,9 @@ $flexboyContainers: (
 ### Use helper mixins
 ```scss
 // to attach size-specific classes
-@include size(md, (row, j-between, col-md));
+// extends the row-md, j-between-md, and col-md classes.
+// @mixin size($breakPointName, $selectorList)
+@include size(md, (row, j-between, col));
 
 // a mixin to create a container which subtracts width by padding.
 // @mixin container($subtractPadding, $breakPointName)
