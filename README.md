@@ -12,7 +12,7 @@ $flexboyContainers: (
   md: 900px,
   lg: 1200px
 );
-@import "../lib/_flex.scss";
+@import "flexboy.scss";
 ```
 ### Use @extend
 ```scss

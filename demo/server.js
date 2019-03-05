@@ -12,7 +12,7 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.get("/style.css", (req, res) => {
-	let styleString = "$flexboy: (md: 1280px, lg: 1600px); $flexboyContainers: (default: 600px, md: 900px, lg: 1200px);@import '../lib/_flex.scss';#parent {";
+	let styleString = "$flexboy: (md: 1280px, lg: 1600px); $flexboyContainers: (default: 600px, md: 900px, lg: 1200px);@import '../flexboy.scss';#parent {";
 	if (req.query.extend.length > 0) {
 		styleString += "@extend " + decodeURIComponent(req.query.extend) + ";";
 	}
@@ -20,7 +20,7 @@ app.get("/style.css", (req, res) => {
 	sass.render({
 		data: styleString,
 		outputStyle: 'compressed',
-		includePaths: ['../lib/_flex.scss']
+		includePaths: ['../flexboy.scss']
 	}, function (err, result) {
 		if (err) {
 			res.status(400).send(err);
