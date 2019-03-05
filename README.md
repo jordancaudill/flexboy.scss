@@ -1,6 +1,6 @@
 # flexboy
 ### Get Started
-Set your flexboy variables and import the library. You can set
+Set your flexboy variables and import the library. You can set whatever names and sizes you like (default required for $flexboyContainers)
 ```scss
 $flexboy: (
   md: 1280px,
