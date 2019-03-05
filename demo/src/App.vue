@@ -1,60 +1,62 @@
 <style lang="scss">
+$flexboy: (md: 1280px, lg: 1600px);
+// $containerWidths: (600, 900, 1200);
+@import "../lib/_flex.scss";
 #controls {
-	display: flex;
-	flex-direction: row;
-	// align-items: center;
-	// @include desktop(('.row'));
-	.type-section {
-		// background: rgba(0, 0, 255, 0.2);\
-		padding: 10px;
-		.control {
-			height: 40px;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: flex-end;
-			label {
-				// display: block;
-				user-select: none;
-				font-family: Helvetica, sans-serif;
-	
-			}	
-			input[type=checkbox] {
-				width: 20px;
-				height: 20px;
-			}
-		}	
-	}	
+//   display: flex;
+//   flex-direction: row;
+  // align-items: center;
+  @extend %row-md;
+  // @include desktop(('.row'));
+  .type-section {
+    // background: rgba(0, 0, 255, 0.2);\
+    padding: 10px;
+    .control {
+      height: 40px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      label {
+        // display: block;
+        user-select: none;
+        font-family: Helvetica, sans-serif;
+      }
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 }
 #parent {
-    background: rgba(255, 0, 0, 0.1);
-    margin-top: 30px;
+  background: rgba(255, 0, 0, 0.1);
+  margin-top: 30px;
 }
 .child {
-	$max: 11;
-	$deg: 360 / $max;
-	@for $i from 1 to $max {
-		&:nth-child(#{$i}) {
-			$hue: adjust_hue(turquoise, $i * $deg);
-			background: linear-gradient(45deg, $hue, adjust_hue($hue, 30%));
-			border: solid 4px $hue;
-			width: 100px + ($i * 15);
-			height: 100px - ($i * 7);
-		
-		}
-	}
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	font-size: 30px;
-	font-family: Helvetica, sans-serif;
-	color: white;
-	font-weight: 900;
+  $max: 11;
+  $deg: 360 / $max;
+  @for $i from 1 to $max {
+    &:nth-child(#{$i}) {
+      $hue: adjust_hue(turquoise, $i * $deg);
+      background: linear-gradient(45deg, $hue, adjust_hue($hue, 30%));
+      border: solid 4px $hue;
+      width: 100px + ($i * 15);
+      height: 100px - ($i * 7);
+    }
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-family: Helvetica, sans-serif;
+  color: white;
+  font-weight: 900;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 </style>
 
@@ -83,8 +85,7 @@ body {
 <script>
 export default {
   name: "app",
-  components: {
-  },
+  components: {},
   mounted: function() {
     const parent = document.getElementById("parent");
     const types = [
@@ -171,7 +172,10 @@ export default {
       let fileref = document.createElement("link");
       fileref.setAttribute("rel", "stylesheet");
       fileref.setAttribute("id", "generated-styles");
-      fileref.setAttribute("href", "https://localhost:8081/style.css?extend=" + extend);
+      fileref.setAttribute(
+        "href",
+        "https://localhost:8081/style.css?extend=" + extend
+      );
       document.getElementsByTagName("head")[0].appendChild(fileref);
     }
     for (let i = 0; i < 5; i++) {

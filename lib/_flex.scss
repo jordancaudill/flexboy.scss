@@ -1,3 +1,4 @@
+// $flexboy: (md: 1280px, lg: 1600px);
 @function getSizedSelector($selector, $breakPointName) {
     @if($breakPointName=='') {
         @return '#{$selector}';
@@ -7,37 +8,9 @@
     }
 }
 
-@mixin gutter($breakPointName, $amount) {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        padding: $amount / 2;
-        &>* {
-            margin: $amount / 2;
-        }
-    }
-}
-
-@mixin setDefaultContainers($args...) {
-    
-}
-
-@mixin container($breakPointName, $width, $subtractPadding: "null") {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        max-width: $width;
-        @if($subtractPadding !="null") {
-            max-width: #{calc(#{$width} - #{$subtractPadding})
-        }
-        ;
-    }
-    margin-left: auto;
-    margin-right: auto;
-}
-
-}
-
-@if(length($breakPoints) !=length($breakPointNames) or length($breakPoints) !=length($containerWidths)) {
-    @error 'Your breakPoints, breakPointNames, and containerWidths arguments must all be the same length';
-}
-
+@if(variable-exists(flexboy)) {
+$originMap: ('': 0px);
+$breakPoints: map-merge($originMap, $flexboy);
 $justifyStates: (start: flex-start,
 end: flex-end,
 center: center,
@@ -55,35 +28,63 @@ $directions: ('row',
 $wrapStates: (wrap,
 wrap-reverse,
 nowrap);
-//container and fluid
-@each $breakPointName in $breakPointNames {
-    //container
-    .#{getSizedSelector('container', $breakPointName)} {
-        $breakPointNameIndex: index($breakPointNames, $breakPointName);
-        @for $i from $breakPointNameIndex to length($breakPointNames)+1 {
-            $containerWidth: nth($containerWidths, $i);
-            @media(min-width: nth($breakPoints, $i) + 'px') {
-                max-width: #{$containerWidth}px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-    } //fluid
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName))+'px') {
-        .#{getSizedSelector('fluid', #{$breakPointName})
-    }
-        {
-        max-width: 100%;
-    }
-}
 
-}
+// @mixin gutter($breakPointName, $amount) {
+//     @media(min-width: nth($breakPoints, index($breakPoints, $breakPointName)) ) {
+//         padding: $amount / 2;
+//         &>* {
+//             margin: $amount / 2;
+//         }
+//     }
+// }
+
+// @mixin setDefaultContainers($args...) {
+    
+// }
+
+// @mixin container($breakPointName, $width, $subtractPadding: "null") {
+//     @media(min-width: nth($breakPoints, index($breakPoints, $breakPointName)) ) {
+//         max-width: $width;
+//         @if($subtractPadding !="null") {
+//             max-width: #{calc(#{$width} - #{$subtractPadding})
+//         }
+//         ;
+//     }
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// }
+
+// container and fluid
+// @each $breakPointName, $breakPointSize in $breakPoints {
+//     //container
+//     %#{getSizedSelector('container', $breakPointName)} {
+//         $breakPointNameIndex: index($breakPoints, ($breakPointName $breakPointSize));
+//         @for $i from $breakPointNameIndex to length($breakPoints)+1 {
+//             $containerWidth: nth($containerWidths, $i);
+//             @media(min-width: nth($breakPoints, $i) ) {
+//                 max-width: #{$containerWidth}px;
+//                 margin-left: auto;
+//                 margin-right: auto;
+//             }
+//         }
+//     } //fluid
+//     @media(min-width: $breakPointSize ) {
+//         %#{getSizedSelector('fluid', #{$breakPointName})
+//     }
+//         {
+//         max-width: 100%;
+//     }
+// }
+
+// }
 
 //wrap
-@each $breakPointName in $breakPointNames {
+@each $breakPointName, $breakPointSize in $breakPoints {
     @each $wrapState in $wrapStates {
-        @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName))+'px') {
-            .#{getSizedSelector(#{$wrapState}, #{$breakPointName})
+		@media(min-width: $breakPointSize ) {
+            %#{getSizedSelector(#{$wrapState}, #{$breakPointName})
         }
             {
             flex-wrap: $wrapState;
@@ -92,12 +93,12 @@ nowrap);
 }
 
 }
-
 //flex-direction
-@each $breakPointName in $breakPointNames {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+@each $breakPointName, $breakPointSize in $breakPoints {
+	@debug(index($breakPoints, ($breakPointName $breakPointSize)));
+    @media(min-width: $breakPointSize ) {
         @each $direction in $directions {
-            .#{getSizedSelector($direction, $breakPointName)} {
+            %#{getSizedSelector($direction, $breakPointName)} {
                 display: flex;
                 $flex-dir: $direction;
                 @if($direction=='col') {
@@ -113,10 +114,10 @@ nowrap);
 }
 
 //justify-content
-@each $breakPointName in $breakPointNames {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+@each $breakPointName, $breakPointSize in $breakPoints {
+    @media(min-width: $breakPointSize ) {
         @each $name, $state in $justifyStates {
-            .#{getSizedSelector(j-#{$name}, $breakPointName)
+            %#{getSizedSelector(j-#{$name}, $breakPointName)
         }
             {
             justify-content: $state;
@@ -127,10 +128,10 @@ nowrap);
 }
 
 //align-items
-@each $breakPointName in $breakPointNames {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+@each $breakPointName, $breakPointSize in $breakPoints {
+    @media(min-width: $breakPointSize ) {
         @each $name, $state in $alignStates {
-            .#{getSizedSelector(a-#{$name}, $breakPointName)
+            %#{getSizedSelector(a-#{$name}, $breakPointName)
         }
             {
             align-items: $state;
@@ -141,9 +142,9 @@ nowrap);
 }
 
 //hide at a size or greater
-@each $breakPointName in $breakPointNames {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        .#{getSizedSelector('hide', #{$breakPointName})
+@each $breakPointName, $breakPointSize in $breakPoints {
+    @media(min-width: $breakPointSize ) {
+        %#{getSizedSelector('hide', #{$breakPointName})
     }
         {
         display: none;
@@ -153,13 +154,13 @@ nowrap);
 }
 
 //hide at a specific size
-@each $breakPointName in $breakPointNames {
-    $nextIndex: index($breakPointNames, $breakPointName)+1;
-    @if($nextIndex <=length($breakPointNames)) {
+@each $breakPointName, $breakPointSize in $breakPoints {
+    $nextIndex: index($breakPoints, $breakPointName $breakPointSize)+1;
+    @if($nextIndex <=length($breakPoints)) {
         $nextPx: nth($breakPoints, $nextIndex);
-        @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+		@media(min-width: $breakPointSize ) {
             @media(max-width: $nextPx - 1px) {
-                .#{getSizedSelector('hide-at', #{$breakPointName})
+                %#{getSizedSelector('hide-at', #{$breakPointName})
             }
                 {
                 display: none;
@@ -169,8 +170,8 @@ nowrap);
 }
 
 @else {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        .#{getSizedSelector('hide-at', #{$breakPointName})
+    @media(min-width: $breakPointSize ) {
+        %#{getSizedSelector('hide-at', #{$breakPointName})
     }
         {
         display: none;
@@ -182,9 +183,9 @@ nowrap);
 }
 
 //show at a size or greater
-@each $breakPointName in $breakPointNames {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        .#{getSizedSelector('show', #{$breakPointName})
+@each $breakPointName, $breakPointSize in $breakPoints {
+    @media(min-width: $breakPointSize ) {
+        %#{getSizedSelector('show', #{$breakPointName})
     }
         {
         display: initial;
@@ -194,13 +195,13 @@ nowrap);
 }
 
 //show at a specific size
-@each $breakPointName in $breakPointNames {
-    $nextIndex: index($breakPointNames, $breakPointName)+1;
-    @if($nextIndex <=length($breakPointNames)) {
+@each $breakPointName, $breakPointSize in $breakPoints {
+    $nextIndex: index($breakPoints, $breakPointName $breakPointSize)+1;
+    @if($nextIndex <=length($breakPoints)) {
         $nextPx: nth($breakPoints, $nextIndex);
-        @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+		@media(min-width: $breakPointSize ) {
             @media(max-width: $nextPx - 1px) {
-                .#{getSizedSelector('show-at', #{$breakPointName})
+                %#{getSizedSelector('show-at', #{$breakPointName})
             }
                 {
                 display: initial;
@@ -210,8 +211,8 @@ nowrap);
 }
 
 @else {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        .#{getSizedSelector('show-at', #{$breakPointName})
+    @media(min-width: $breakPointSize ) {
+        %#{getSizedSelector('show-at', #{$breakPointName})
     }
         {
         display: initial;
@@ -223,22 +224,22 @@ nowrap);
 }
 
 // display: flex
-@each $breakPointName in $breakPointNames {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        .#{getSizedSelector('flex', $breakPointName)} {
+@each $breakPointName, $breakPointSize in $breakPoints {
+    @media(min-width: $breakPointSize ) {
+        %#{getSizedSelector('flex', $breakPointName)} {
             display: flex;
         }
     }
 }
 
 //flex at a specific size
-@each $breakPointName in $breakPointNames {
-    $nextIndex: index($breakPointNames, $breakPointName)+1;
-    @if($nextIndex <=length($breakPointNames)) {
+@each $breakPointName, $breakPointSize in $breakPoints {
+    $nextIndex: index($breakPoints, $breakPointName $breakPointSize)+1;
+    @if($nextIndex <=length($breakPoints)) {
         $nextPx: nth($breakPoints, $nextIndex);
-        @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+		@media(min-width: $breakPointSize ) {
             @media(max-width: $nextPx - 1px) {
-                .#{getSizedSelector('flex-at', #{$breakPointName})
+                %#{getSizedSelector('flex-at', #{$breakPointName})
             }
                 {
                 display: flex;
@@ -248,8 +249,8 @@ nowrap);
 }
 
 @else {
-    @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
-        .#{getSizedSelector('flex-at', #{$breakPointName})
+    @media(min-width: $breakPointSize ) {
+        %#{getSizedSelector('flex-at', #{$breakPointName})
     }
         {
         display: flex;
@@ -261,21 +262,24 @@ nowrap);
 }
 
 //hide all other sizes
-@each $breakPointName in $breakPointNames {
-    $nextIndex: index($breakPointNames, $breakPointName)+1;
-    .#{getSizedSelector('only', #{$breakPointName})
+@each $breakPointName, $breakPointSize in $breakPoints {
+    $nextIndex: index($breakPoints, $breakPointName $breakPointSize)+1;
+    %#{getSizedSelector('only', #{$breakPointName})
 }
 
     {
-    @media(max-width: nth($breakPoints, index($breakPointNames, $breakPointName)) - 1px) {
+    @media(max-width: $breakPointSize - 1px) {
         display: none;
     }
-    @if($nextIndex <=length($breakPointNames)) {
+    @if($nextIndex <=length($breakPoints)) {
         $nextPx: nth($breakPoints, $nextIndex);
-        @media(min-width: nth($breakPoints, index($breakPointNames, $breakPointName)) + 'px') {
+		@media(min-width: $breakPointSize ) {
             display: none;
         }
     }
 }
 
+}
+} @else {
+	@error('$flexboy variable must be defined!');
 }
