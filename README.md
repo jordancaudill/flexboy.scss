@@ -39,7 +39,9 @@ padding: 40px;
 @include gutter(20px, md);
 ```
 ### How sized classes are applied:
-Flexboy.scss follows a mobile-first paradigm. The default classes apply themselves at >= 0px screen width. If you define your first breakpoint at as `md: 1280px`, then the `-md` classes will apply themselves at screen widths >= 1280px. Example: Applying the classes `.row` and `.col-md` will render a flexbox row from 0px to 1279px screen width, and a flexbox column at >= 1280px screen width. This rule holds true for all cases except the `hide` and `only` classes, which have higher precedence, since they need to override the css `display` property.
+Flexboy.scss follows a mobile-first paradigm. The default classes apply themselves at >= 0px screen width. If you define your first breakpoint as `md: 1280px`, then the `-md` classes will apply themselves at screen widths >= 1280px.
+
+Example: Applying the classes `.row` and `.col-md` will render a flexbox row from 0px to 1279px screen width, and a flexbox column at >= 1280px screen width. This rule holds true for all cases except the `hide` and `only` classes, which have higher precedence, since they need to override the css `display` property.
 
 ### Classes explained:
 #### Flex Directions
