@@ -16,7 +16,7 @@ $flexboyContainers: (
 ```
 ### Use @extend
 ```scss
-@extend .row, .j-between. .col-md;
+@extend .row, .j-between, .col-md;
 ```
 ### Use class
 ```html
@@ -38,4 +38,3 @@ padding: 40px;
 // @mixin gutter($amount, $breakPointName)
 @include gutter(20px, md);
 ```
-
