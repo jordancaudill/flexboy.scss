@@ -74,7 +74,7 @@ The `hide` class applies `display: none;` to the element only at that associated
 #### Only
 The `only` class applies `display: none;` to the element at all sizes other than the associated size.
 #### Container
-The `container` class adds sets the width of the element to the associated $containerWidth. It also applies `margin-left: auto; margin-right: auto;` to center the container.
+The `container` class sets the width of the element to the associated $containerWidth. It also applies `margin-left: auto; margin-right: auto;` to center the container.
 #### Fluid
 The `fluid` class simply sets `width: 100%;`. This serves as a means to counteract the `container` class at higher breakpoints.
 
