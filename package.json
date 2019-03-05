@@ -1,6 +1,6 @@
 {
   "name": "flexboy.scss",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A responsive SCSS flexbox framework",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "sass": "^1.17.2"
   },
   "repository": {
-	"type": "git",
-	"url": "https://github.com/jordancaudill/flexboy"
-  }  
+    "type": "git",
+    "url": "https://github.com/jordancaudill/flexboy"
+  }
 }
