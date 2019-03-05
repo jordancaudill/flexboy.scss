@@ -28,5 +28,9 @@
     "express": "^4.16.4",
     "node-sass": "^4.11.0",
     "sass": "^1.17.2"
-  }
+  },
+  "repository": {
+	"type": "git",
+	"url": "https://github.com/jordancaudill/flexboy"
+  }  
 }
