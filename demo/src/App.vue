@@ -9,24 +9,24 @@ $flexboyContainers: (
   lg: 1200px
 );
 @import "../lib/_flex.scss";
-#app {
-  //   @extend .row;
+#breakpoints {
+	@extend .row;
 }
 #controls {
   @extend .row, .wrap, .j-around;
 
   .control-type {
     padding: 10px;
-	width: 200px;
-	border: solid 2px gray;
+    width: 200px;
+    border: solid 2px gray;
     .control {
       //   height: 40px;
-	  //   @extend .row, .j-end, .a-center;
-	  &.even {
-		  background: lightblue;
-	  }
+      //   @extend .row, .j-end, .a-center;
+      &.even {
+        background: lightblue;
+      }
       .size {
-		  height: 30px;
+        height: 30px;
         font-family: Helvetica, sans-serif;
         color: gray;
         &:first-child {
@@ -48,6 +48,7 @@ $flexboyContainers: (
   width: 100%;
   background: rgba(255, 0, 0, 0.1);
   margin-top: 30px;
+  height: 800px;
 }
 .child {
   $max: 11;
@@ -70,7 +71,10 @@ $flexboyContainers: (
   color: white;
   font-weight: 900;
 }
-
+h4, h6 {
+	line-height: 0px;
+	margin-left: 20px;
+}
 body {
   margin: 0;
 }
@@ -80,25 +84,30 @@ body {
   <div id="app">
     <div>
       <section id="breakpoints">
-        <form id="new-breakpoint" onsubmit="addBreakpoint()">
-          <label>New Breakpoint</label>
-          <input placeholder="Breakpoint name (ex: md)" type="text" id="new-breakpoint-name">
-          <input
-            placeholder="Breakpoint width (ex: 1280)"
-            type="number"
-            min="1"
-            id="new-breakpoint-size"
-          >
-          <button type="submit">Add</button>
-        </form>
+		  <div>
+			<h4>breakpoints</h4>
+			<h6>md: 1280px</h6>
+			<h6>lg: 1600px</h6>
+		  </div>
+		  <div>
+			<h4>containers</h4>
+			<h6>default: 600px</h6>
+			<h6>md: 900px</h6>
+			<h6>lg: 1200px</h6>
+		  </div>
       </section>
       <section id="controls">
         <div class="control-type" :key="type" v-for="type in types">
-          <div class="control" :class="{even: idx % 2 === 0}" :key="control" v-for="(control, idx) in classes[type]">
+          <div
+            class="control"
+            :class="{even: idx % 2 === 0}"
+            :key="control.name"
+            v-for="(control, idx) in classes[type]"
+          >
             <div class="size" :key="size.size" v-for="size in sizes">
-              <label v-if="!size.name" :for="control">.{{control}}</label>
-              <label v-if="size.name" :for="control">.{{control}}-{{size.name}}</label>
-              <input type="checkbox" :name="control">
+              <label v-if="!size.name" :for="control.name">.{{control.name}}</label>
+              <label v-if="size.name" :for="control.name">.{{control.name}}-{{size.name}}</label>
+              <input type="checkbox" @change="changeCSS()" v-model="control.values[size.name]" :name="control.name">
             </div>
           </div>
         </div>
@@ -106,6 +115,7 @@ body {
       <button @click="children > 1? children-- : null;">Remove child</button>
       <button @click="children < 10? children++ : null;">Add child</button>
     </div>
+	<h4>{{classList}}</h4>
     <section id="parent">
       <div class="child" :key="child" v-for="child in children">{{child}}</div>
     </section>
@@ -116,6 +126,25 @@ body {
 export default {
   name: "app",
   components: {},
+  computed: {
+	  classList: function(vm = this) {
+		  let classList = "";
+		  vm.types.forEach(function(type) {
+			  vm.classes[type].forEach(function(someClass) {
+				  if (someClass.values[""]) {
+					  classList += "." + someClass.name;
+				  }
+				  if (someClass.values["md"]) {
+					  classList += "." + someClass.name + "-md";
+				  }
+				  if (someClass.values["lg"]) {
+					  classList += "." + someClass.name + "-lg";
+				  }
+			  });
+		  });
+		  return classList;
+	  }
+  },
   data: function() {
     return {
       sizes: [
@@ -125,13 +154,35 @@ export default {
       ],
       children: 5,
       classes: {
-        direction: ["row", "col", "row-reverse", "col-reverse"],
-        justify: ["j-start", "j-end", "j-center", "j-between", "j-around"],
-        align: ["a-start", "a-end", "a-center", "a-baseline", "a-stretch"],
-        container: ["container", "fluid"],
-        wrap: ["wrap", "wrap-reverse", "nowrap"],
-        hide: ["hide"],
-        only: ["only"]
+		direction: [
+			{name: "row", values: {"": false, md: false, lg: false}},
+			{name: "col", values: {"": false, md: false, lg: false}},
+			{name: "row-reverse", values: {"": false, md: false, lg: false}},
+			{name: "col-reverse", values: {"": false, md: false, lg: false}}
+		],
+        justify: [
+			{name: "j-start", values: {"": false, md: false, lg: false}},
+			{name: "j-end", values: {"": false, md: false, lg: false}},
+			{name: "j-center", values: {"": false, md: false, lg: false}},
+			{name: "j-between", values: {"": false, md: false, lg: false}},
+			{name: "j-around", values: {"": false, md: false, lg: false}},
+		],
+        align: [			{name: "a-start", values: {"": false, md: false, lg: false}},
+			{name: "a-end", values: {"": false, md: false, lg: false}},
+			{name: "a-center", values: {"": false, md: false, lg: false}},
+			{name: "a-baseline", values: {"": false, md: false, lg: false}},
+			{name: "a-stretch", values: {"": false, md: false, lg: false}},
+],
+        container: [			{name: "container", values: {"": false, md: false, lg: false}},
+			{name: "fluid", values: {"": false, md: false, lg: false}}
+],
+        wrap: [
+			{name: "wrap", values: {"": false, md: false, lg: false}},
+			{name: "nowrap", values: {"": false, md: false, lg: false}},
+			{name: "wrap-reverse", values: {"": false, md: false, lg: false}}
+			],
+        hide: [{name: "hide", values: {"": false, md: false, lg: false}}],
+        only: [{name: "only", values: {"": false, md: false, lg: false}}]
       },
       types: [
         "direction",
@@ -145,31 +196,37 @@ export default {
     };
   },
   methods: {
-    changeCSS: function() {
+    changeCSS: function(vm = this) {
       let oldStyles = document.getElementById("generated-styles");
       if (oldStyles) {
         oldStyles.remove();
       }
-    //   let extend = "";
-    //   types.forEach(function(type) {
-    //     classes[type].forEach(function(className) {
-    //       if (document.getElementById(className).checked) {
-    //         extend += "." + className + ",";
-    //       }
-    //     });
-    //   });
+		  let extend = "";
+		  vm.types.forEach(function(type) {
+			  vm.classes[type].forEach(function(someClass) {
+				  if (someClass.values[""]) {
+					  extend += "." + someClass.name + ",";
+				  }
+				  if (someClass.values["md"]) {
+					  extend += "." + someClass.name + "-md" + ",";
+				  }
+				  if (someClass.values["lg"]) {
+					  extend += "." + someClass.name + "-lg" + ",";
+				  }
+			  });
+		  });
       let fileref = document.createElement("link");
       fileref.setAttribute("rel", "stylesheet");
       fileref.setAttribute("id", "generated-styles");
       fileref.setAttribute(
         "href",
-        "https://localhost:8081/style.css?extend=" + extend
+        "/style.css?extend=" + extend
       );
       document.getElementsByTagName("head")[0].appendChild(fileref);
     }
   },
   mounted: function() {
-    changeCSS();
+    this.changeCSS();
   }
 };
 </script>

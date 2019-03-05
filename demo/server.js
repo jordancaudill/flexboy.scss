@@ -2,7 +2,7 @@ const express = require("express");
 const compression = require("compression");
 const http = require("http");
 const app = express();
-const port = 8081;
+const port = 8080;
 const sass = require('node-sass');
 
 app.use(compression());
@@ -12,7 +12,7 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.get("/style.css", (req, res) => {
-	let styleString = "$breakPoints: (0, 1280, 1600);$breakPointNames: ('', 'md', 'lg');$containerWidths: (600, 900, 1200);@import '../lib/_flex.scss';#parent {";
+	let styleString = "$flexboy: (md: 1280px, lg: 1600px); $flexboyContainers: (default: 600px, md: 900px, lg: 1200px);@import '../lib/_flex.scss';#parent {";
 	if (req.query.extend.length > 0) {
 		styleString += "@extend " + decodeURIComponent(req.query.extend) + ";";
 	}
@@ -31,12 +31,8 @@ app.get("/style.css", (req, res) => {
 		res.status(400).send();
 	});
 });
-app.get("/demo.css", (req, res) => {
-	res.sendFile("./demo.css", { root: __dirname });
-});
-app.get("/demo.js", (req, res) => {
-	res.sendFile("./demo.js", { root: __dirname });
-});
+app.use("/js", express.static(__dirname + "/dist/js"));
+app.use("/css", express.static(__dirname + "/dist/css"));
 app.get("/*", (req, res) => {
 	res.sendFile("./index.html", { root: __dirname });
 });

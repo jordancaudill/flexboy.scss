@@ -1,6 +1,3 @@
-// $flexboy: (md: 1280px, lg: 1600px);
-// $flexboyContainers: (default: 600px, md: 900px, lg: 1200px);
-
 @function getSizedSelector($selector, $breakPointName) {
     @if($breakPointName=='default' or $breakPointName=='null' or $breakPointName=='') {
         @return '#{$selector}';
