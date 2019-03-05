@@ -1,20 +1,22 @@
 <style lang="scss">
-$flexboy: (
-  md: 1280px,
-  lg: 1600px
-);
-$flexboyContainers: (
-  default: 600px,
-  md: 900px,
-  lg: 1200px
-);
-@import "../flexboy.scss";
+// $flexboy: (
+//   md: 1280px,
+//   lg: 1600px
+// );
+// $flexboyContainers: (
+//   default: 600px,
+//   md: 900px,
+//   lg: 1200px
+// );
 #breakpoints {
-	@extend .row;
+	display: flex;
+	flex-direction: row;
 }
 #controls {
-  @extend .row, .wrap, .j-around;
-
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
   .control-type {
     padding: 10px;
     width: 200px;

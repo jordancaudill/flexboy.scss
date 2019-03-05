@@ -2,7 +2,7 @@
   "name": "flexboy.scss",
   "version": "1.0.5",
   "description": "A responsive SCSS flexbox framework",
-  "main": "index.js",
+  "main": "flexboy.scss",
   "scripts": {},
   "keywords": [
     "flexbox",
