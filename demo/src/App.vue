@@ -1,8 +1,11 @@
 <style lang="scss">
-@import "flexboy.css";
+// @import "flexboy.css";
+$flexboy: ( breakpoints: (md: 1280px, lg: 1600px), containers: (default: 600px, md: 900px, lg: 1200px), disableDefaultMargins: false, colors: (myRed: red, myBlue: blue), fonts: (helvetica: (400, 700, 900)));
+@import "../../flexboy.scss";
 #breakpoints {
 	display: flex;
-	flex-direction: row;
+  flex-direction: row;
+  // @extend %myRed-bg;
 }
 #controls {
 	display: flex;

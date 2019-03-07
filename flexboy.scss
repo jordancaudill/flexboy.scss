@@ -1,5 +1,4 @@
-// $flexboy: (md: 1280px, lg: 1600px);
-// $flexboyContainers: (default: 600px, md: 900px, lg: 1200px);
+// $flexboy: ( breakpoints: (md: 1280px, lg: 1600px), containers: (default: 600px, md: 900px, lg: 1200px), disableDefaultMargins: false, colors: (myRed: red, myBlue: blue), fonts: (poppy: (400, 700, 900)));
 @function getSizedSelector($selector, $breakPointName) {
     @if($breakPointName=='default' or $breakPointName=='null' or $breakPointName=='') {
         @return '#{$selector}';
@@ -14,7 +13,7 @@
         $minWidth: 0px;
     }
     @else {
-        $minWidth: map-get($flexboy, $breakPointName);
+        $minWidth: map-get($breakpoints, $breakPointName);
     }
     @media(min-width: $minWidth) {
         padding: $amount / 2;
@@ -27,11 +26,11 @@
 @mixin container($subtractPadding, $breakPointName) {
     @if($breakPointName=="null" or $breakPointName=="default" or $breakPointName=="") {
         $minWidth: 0px;
-        $width: map-get($flexboyContainers, "default");
+        $width: map-get($containers, "default");
     }
     @else {
-        $minWidth: map-get($flexboy, $breakPointName);
-        $width: map-get($flexboyContainers, $breakPointName);
+        $minWidth: map-get($breakpoints, $breakPointName);
+        $width: map-get($containers, $breakPointName);
     }
     @media(min-width: $minWidth) {
         margin-left: auto;
@@ -49,7 +48,7 @@
 @mixin size($breakPointName,
 $selectorList) {
     @each $selector in $selectorList {
-        @extend .#{getSizedSelector(#{$selector},
+        @extend %#{getSizedSelector(#{$selector},
         #{$breakPointName})
     }
     ;
@@ -58,70 +57,97 @@ $selectorList) {
 }
 
 @if(variable-exists(flexboy)) {
-    $zeroMap: ('default': 0px);
-    $breakPoints: map-merge($zeroMap, $flexboy);
-    $justifyStates: (start: flex-start, end: flex-end, center: center, between: space-between, around: space-around);
-    $alignStates: (start: flex-start, end: flex-end, center: center, baseline: baseline, stretch: stretch);
-    $directions: ('row', 'col', 'row-reverse', 'col-reverse');
-    $wrapStates: (wrap, wrap-reverse, nowrap);
-    @each $breakPointName,
-    $breakPointSize in $breakPoints {
-        //container
-        .#{getSizedSelector('container', $breakPointName)} {
-            $breakPointIndex: index($breakPoints, ($breakPointName $breakPointSize));
-            @for $i from $breakPointIndex to length($breakPoints)+1 {
-                $containerWidth: nth(map_values($flexboyContainers), $i);
-                @media(min-width: nth(map_values($breakPoints), $i)) {
-                    width: #{$containerWidth};
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-            }
+    $breakpoints: null;
+    $containers: null;
+    $disableDefaultMargins: false;
+    $colors: null;
+    $fonts: null;
+    $zeroMap: (default: 0px);
+    $breakpointMap: $zeroMap;
+    @each $property,
+    $value in $flexboy {
+        @if ($property==breakpoints) {
+            $breakpoints: $value;
+            $breakpointMap: map-merge($zeroMap, $breakpoints);
         }
-        @media(min-width: $breakPointSize) {
-            //direction
-            @each $direction in $directions {
-                .#{getSizedSelector($direction, $breakPointName)} {
-                    display: flex;
-                    $flex-dir: $direction;
-                    @if($direction=='col') {
-                        $flex-dir: 'column';
+        @if ($property==containers) {
+            $containers: $value;
+        }
+        @if ($property==disableDefaultMargins) {
+            $disableDefaultMargins: $value;
+        }
+        @if ($property==colors) {
+            $colors: $value;
+        }
+        @if ($property==fonts) {
+            $fonts: $value;
+        }
+    } // breakpoints and containers
+    @if($breakpoints !=null) {
+        $justifyStates: (start: flex-start, end: flex-end, center: center, between: space-between, around: space-around);
+        $alignStates: (start: flex-start, end: flex-end, center: center, baseline: baseline, stretch: stretch);
+        $directions: ('row', 'col', 'row-reverse', 'col-reverse');
+        $wrapStates: (wrap, wrap-reverse, nowrap);
+        @each $breakPointName,
+        $breakPointSize in $breakpointMap {
+            //container
+            @if ($containers !=null) {
+                %#{getSizedSelector('container', $breakPointName)} {
+                    $breakPointIndex: index($breakpointMap, ($breakPointName $breakPointSize));
+                    @for $i from $breakPointIndex to length($breakpointMap)+1 {
+                        $containerWidth: nth(map_values($containers), $i);
+                        @media(min-width: nth(map_values($breakpointMap), $i)) {
+                            width: #{$containerWidth};
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
                     }
-                    @if($direction=='col-reverse') {
-                        $flex-dir: 'column-reverse';
-                    }
-                    flex-direction: #{$flex-dir};
-                }
-            } //wrap
-            @each $wrapState in $wrapStates {
-                @media(min-width: $breakPointSize) {
-                    .#{getSizedSelector($wrapState, $breakPointName)
-
-                }
-                    {
-                    flex-wrap: $wrapState;
                 }
             }
-        } //justify-content
+            @media(min-width: $breakPointSize) {
+                //direction
+                @each $direction in $directions {
+                    %#{getSizedSelector($direction, $breakPointName)} {
+                        display: flex;
+                        $flex-dir: $direction;
+                        @if($direction=='col') {
+                            $flex-dir: 'column';
+                        }
+                        @if($direction=='col-reverse') {
+                            $flex-dir: 'column-reverse';
+                        }
+                        flex-direction: #{$flex-dir};
+                    }
+                } //wrap
+                @each $wrapState in $wrapStates {
+                    @media(min-width: $breakPointSize) {
+                        %#{getSizedSelector($wrapState, $breakPointName)
+
+                    }
+                        {
+                        flex-wrap: $wrapState;
+                    }
+                }
+            } //justify-content
+            @each $name,
+            $state in $justifyStates {
+                %#{getSizedSelector(j-#{$name},
+                $breakPointName)
+            }
+                {
+                justify-content: $state;
+            }
+        } //align-items
         @each $name,
-        $state in $justifyStates {
-            .#{getSizedSelector(j-#{$name},
+        $state in $alignStates {
+            %#{getSizedSelector(a-#{$name},
             $breakPointName)
         }
             {
-            justify-content: $state;
+            align-items: $state;
         }
-    } //align-items
-    @each $name,
-    $state in $alignStates {
-        .#{getSizedSelector(a-#{$name},
-        $breakPointName)
-    }
-        {
-        align-items: $state;
-    }
-} //fluid 
-.#{getSizedSelector('fluid', #{$breakPointName})
+    } //fluid 
+    %#{getSizedSelector('fluid', #{$breakPointName})
 }
 
     {
@@ -130,13 +156,13 @@ $selectorList) {
 
 }
 
-$nextIndex: index($breakPoints,
+$nextIndex: index($breakpointMap,
 $breakPointName $breakPointSize)+1; //hide at a specific size
-@if($nextIndex <=length($breakPoints)) {
-    $nextPx: nth(map_values($breakPoints), $nextIndex);
+@if($nextIndex <=length($breakpointMap)) {
+    $nextPx: nth(map_values($breakpointMap), $nextIndex);
     @media(min-width: $breakPointSize) {
         @media(max-width: $nextPx - 1px) {
-            .#{getSizedSelector('hide', #{$breakPointName})
+            %#{getSizedSelector('hide', #{$breakPointName})
         }
             {
             display: none;
@@ -148,7 +174,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 
 @else {
     @media(min-width: $breakPointSize) {
-        .#{getSizedSelector('hide', #{$breakPointName})
+        %#{getSizedSelector('hide', #{$breakPointName})
     }
         {
         display: none;
@@ -156,17 +182,124 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 }
 
 } //hide all other sizes
-.#{getSizedSelector('only', #{$breakPointName})
+%#{getSizedSelector('only', #{$breakPointName})
 }
 
     {
     @media(max-width: $breakPointSize - 1px) {
         display: none;
     }
-    @if($nextIndex <=length($breakPoints)) {
-        $nextPx: nth($breakPoints, $nextIndex);
+    @if($nextIndex <=length($breakpointMap)) {
+        $nextPx: nth($breakpointMap, $nextIndex);
         @media(min-width: $breakPointSize) {
             display: none;
+        }
+    }
+}
+
+}
+
+}
+
+//disableDefaultMargins
+@if($disableDefaultMargins==true) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    dd,
+    dl,
+    fieldset,
+    figure,
+    hr,
+    menu,
+    ol,
+    ul,
+    body {
+        // disable default browser margins
+        margin: 0;
+    }
+}
+
+//colors
+@if($colors !=null) {
+    @each $breakPointName,
+    $breakPointSize in $breakpointMap {
+        @media(min-width: $breakPointSize) {
+            @each $name, $color in $colors {
+                %#{getSizedSelector($name, #{$breakPointName})
+            }
+                {
+                color: $color;
+            }
+            %#{getSizedSelector(#{$name}-bg,
+            #{$breakPointName})
+        }
+            {
+            background-color: $color;
+        }
+        %#{getSizedSelector(#{$name}-fill,
+        #{$breakPointName})
+    }
+        {
+        fill: $color;
+    }
+    %#{getSizedSelector(#{$name}-stroke,
+    #{$breakPointName})
+}
+
+    {
+    stroke: $color;
+}
+
+}
+
+}
+
+}
+
+}
+
+//sizes and line-heights
+@each $breakPointName,
+$breakPointSize in $breakpointMap {
+    @media(min-width: $breakPointSize) {
+        @for $size from 1 through 250 {
+            %#{getSizedSelector(s-#{$size}, #{$breakPointName})
+        }
+            {
+            font-size:#{$size}px;
+        }
+        %#{getSizedSelector(lh-#{$size},
+        #{$breakPointName})
+    }
+        {
+        line-height:#{$size}px;
+    }
+}
+
+}
+
+}
+
+//fonts and weights
+@if($fonts !=null) {
+    @each $breakPointName,
+    $breakPointSize in $breakpointMap {
+        @media(min-width: $breakPointSize) {
+            @each $fontName, $fontWeights in $fonts {
+                @each $weight in $fontWeights {
+                    %#{getSizedSelector(#{$fontName}-#{$weight}, #{$breakPointName})
+                }
+                    {
+                    font-family: $fontName;
+                    font-weight: $weight;
+                }
+            }
         }
     }
 }
