@@ -21,12 +21,7 @@
   "author": "Jordan Caudill",
   "license": "ISC",
   "dependencies": {},
-  "devDependencies": {
-    "compression": "^1.7.3",
-    "express": "^4.16.4",
-    "node-sass": "^4.11.0",
-    "sass": "^1.17.2"
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/jordancaudill/flexboy"

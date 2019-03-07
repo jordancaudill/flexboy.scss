@@ -1,13 +1,5 @@
 <style lang="scss">
-// $flexboy: (
-//   md: 1280px,
-//   lg: 1600px
-// );
-// $flexboyContainers: (
-//   default: 600px,
-//   md: 900px,
-//   lg: 1200px
-// );
+@import "flexboy.css";
 #breakpoints {
 	display: flex;
 	flex-direction: row;
@@ -22,8 +14,6 @@
     width: 200px;
     border: solid 2px gray;
     .control {
-      //   height: 40px;
-      //   @extend .row, .j-end, .a-center;
       &.even {
         background: lightblue;
       }
@@ -47,7 +37,7 @@
   }
 }
 #parent {
-  width: 100%;
+  // width: 100%;
   background: rgba(255, 0, 0, 0.1);
   margin-top: 30px;
   height: 800px;
@@ -118,7 +108,7 @@ body {
       <button @click="children < 10? children++ : null;">Add child</button>
     </div>
 	<h4>{{classList}}</h4>
-    <section id="parent">
+    <section id="parent" :class="realClassList">
       <div class="child" :key="child" v-for="child in children">{{child}}</div>
     </section>
   </div>
@@ -149,6 +139,7 @@ export default {
   },
   data: function() {
     return {
+      realClassList: "",
       sizes: [
         { name: "", size: 0 },
         { name: "md", size: 1280 },
@@ -199,32 +190,22 @@ export default {
   },
   methods: {
     changeCSS: function(vm = this) {
-      let oldStyles = document.getElementById("generated-styles");
-      if (oldStyles) {
-        oldStyles.remove();
-      }
-		  let extend = "";
+		  let classes = "";
 		  vm.types.forEach(function(type) {
 			  vm.classes[type].forEach(function(someClass) {
 				  if (someClass.values[""]) {
-					  extend += "." + someClass.name + ",";
+					  classes += someClass.name + " ";
 				  }
 				  if (someClass.values["md"]) {
-					  extend += "." + someClass.name + "-md" + ",";
+					  classes += someClass.name + "-md" + " ";
 				  }
 				  if (someClass.values["lg"]) {
-					  extend += "." + someClass.name + "-lg" + ",";
+					  classes +=  someClass.name + "-lg" + " ";
 				  }
 			  });
-		  });
-      let fileref = document.createElement("link");
-      fileref.setAttribute("rel", "stylesheet");
-      fileref.setAttribute("id", "generated-styles");
-      fileref.setAttribute(
-        "href",
-        "/style.css?extend=" + extend
-      );
-      document.getElementsByTagName("head")[0].appendChild(fileref);
+      });
+      vm.realClassList = classes;
+      // vm.$forceUpdate();
     }
   },
   mounted: function() {

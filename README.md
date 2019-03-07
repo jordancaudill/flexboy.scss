@@ -84,5 +84,5 @@ The `fluid` class simply sets `width: 100%;`. This serves as a means to countera
 ```sh
 cd demo
 npm install
-node server.js
+npm run serve
 ```

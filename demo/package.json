@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "sass": "sass ../flexboy.scss ./src/flexboy.css"
   },
   "description": "flexboy.scss is a simple scss flexbox library that allows you to define custom breakpoints and apply flexbox-related classes based on those breakpoints. The goal of this library is to reduce the amount of code written for often-used flexbox styles, especially for projects that tend to use a lot of CSS media queries.",
   "dependencies": {
