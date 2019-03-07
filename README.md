@@ -1,7 +1,12 @@
 # flexboy.scss
 flexboy.scss is a light-weight scss library, with the purpose of exposing useful SCSS selectors for your project's typical colors, fonts, and flexbox properties. Define your own responsive breakpoints for your project, and take advantage of the SCSS @extend functionality to keep your styles short, clean, and readable.
 
-### Get Started
+## Get Started
+Install flexboy.scss via npm.
+```sh
+  npm install flexboy.scss
+```
+
 Declare your flexboy variable and import the library. Then, you are free to use the flexboy selectors anywhere within scope.
 ```scss
 $flexboy: ( 
