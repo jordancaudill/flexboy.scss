@@ -38,8 +38,8 @@ $flexboy: (
 ```
 #### Use helper mixins
 ```scss
-// to attach size-specific classes
-// extends the row-md, j-between-md, and col-md classes.
+// to attach size-specific selectors
+// extends the row-md, j-between-md, col-md, and myRed-md selectors.
 // @mixin size($breakPointName, $selectorList)
 @include size(md, (row, j-between, col, myRed));
 
@@ -52,10 +52,10 @@ padding: 40px;
 // @mixin gutter($amount, $breakPointName)
 @include gutter(20px, md);
 ```
-### How sized classes are applied:
-flexboy.scss follows a mobile-first paradigm. The default classes apply themselves at >= 0px screen width. If you define your first breakpoint as `md: 1280px`, then the `-md` classes will apply themselves at screen widths >= 1280px.
+### How sized selectors are applied:
+flexboy.scss follows a mobile-first paradigm. The default selectors apply themselves at >= 0px screen width. If you define your first breakpoint as `md: 1280px`, then the `-md` selectors will apply themselves at screen widths >= 1280px.
 
-Example: Applying the classes `.row` and `.col-md` will render a flexbox row from 0px to 1279px screen width, and a flexbox column at >= 1280px screen width. This rule holds true for all cases except the `hide` and `only` classes, which have higher precedence, since they need to override the css `display` property.
+Example: Applying the selectors `%row` and `%col-md` will render a flexbox row from 0px to 1279px screen width, and a flexbox column at >= 1280px screen width. This rule holds true for all cases except the `hide` and `only` selectors, which have higher precedence, since they need to override the css `display` property.
 
 ### Selectors explained:
 #### Flex Directions
@@ -90,7 +90,7 @@ The `%only` selector applies `display: none;` to the element at all sizes other 
 #### Container
 The `%container` selector sets the width of the element to the associated container width. It also applies `margin-left: auto; margin-right: auto;` to center the container.
 #### Fluid
-The `%fluid` selector simply sets `width: 100%;`. This serves as a means to counteract the `container` class at higher breakpoints.
+The `%fluid` selector simply sets `width: 100%;`. This serves as a means to counteract the `%container` selector at higher breakpoints.
 #### Colors
 These selectors refer to various color related properties. See the following examples for a color defined as `myRed: red`:
 * `%myRed` = `color: red;`
