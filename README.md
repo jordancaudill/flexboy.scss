@@ -1,5 +1,5 @@
 # flexboy.scss
-flexboy.scss is a light-weight scss library, with the purpose of exposing useful SCSS selectors for your project's typical colors, fonts, and flexbox properties. Define your own responsive breakpoints for your project, and take advantage of the SCSS @extend functionality to keep your styles short, clean, and readable.
+flexboy.scss is a light-weight scss library, with the purpose of exposing useful SCSS placeholder classes for your project's typical colors, fonts, and flexbox properties. Define your own responsive breakpoints for your project, and take advantage of the SCSS @extend functionality to keep your styles short, clean, and readable.
 
 ## Get Started
 Install flexboy.scss via npm.
@@ -7,10 +7,10 @@ Install flexboy.scss via npm.
   npm install flexboy.scss
 ```
 
-Declare your flexboy variable and import the library. Then, you are free to use the flexboy selectors anywhere within scope.
+Declare your flexboy variable and import the library. Then, you are free to use the flexboy placeholder classes anywhere within scope.
 ```scss
 $flexboy: ( 
-  //set any names and sizes you like. These will be used to determine at what screen width to apply styles, as well as the @extend selector names.
+  //set any names and sizes you like. These will be used to determine at what screen width to apply styles, as well as the the names of the placeholder classes.
   breakpoints: (
     md: 1280px,
     lg: 1600px
@@ -41,10 +41,10 @@ $flexboy: (
   @extend %row, %j-between, %col-md, %helvetica-400, %myRed-lg;
 }
 ```
-#### Use helper mixins
+#### Use helper mixins and functions
 ```scss
-// to attach size-specific selectors
-// extends the row-md, j-between-md, col-md, and myRed-md selectors.
+// to attach size-specific placeholder classes
+// extends the row-md, j-between-md, col-md, and myRed-md placeholder classes.
 // @mixin size($breakPointName, $selectorList)
 @include size(md, (row, j-between, col, myRed));
 
@@ -56,11 +56,18 @@ padding: 40px;
 // add gutter between children in a parent
 // @mixin gutter($amount, $breakPointName)
 @include gutter(20px, md);
-```
-### How sized selectors are applied:
-flexboy.scss follows a mobile-first paradigm. The default selectors apply themselves at >= 0px screen width. If you define your first breakpoint as `md: 1280px`, then the `-md` selectors will apply themselves at screen widths >= 1280px.
 
-Example: Applying the selectors `%row` and `%col-md` will render a flexbox row from 0px to 1279px screen width, and a flexbox column at >= 1280px screen width. This rule holds true for all cases except the `hide` and `only` selectors, which have higher precedence, since they need to override the css `display` property.
+// get the value of one of your custom defined breakpoints.
+// @function breakpoint($breakPointName)
+@media(min-width: breakpoint(md)) {
+  // some styles
+}
+
+```
+### How sized placeholder classes are applied:
+flexboy.scss follows a mobile-first paradigm. The default placeholder classes apply their styles at >= 0px screen width. If you define your first breakpoint as `md: 1280px`, then the `-md` placeholder classes will apply their styles at screen widths >= 1280px.
+
+Example: Applying the placeholder classes `%row` and `%col-md` will render a flexbox row from 0px to 1279px screen width, and a flexbox column at >= 1280px screen width. This rule holds true for all cases except the `hide` and `only` placeholder classes, which have higher precedence, since they need to override the css `display` property.
 
 ### Selectors explained:
 #### Flex Directions
@@ -97,16 +104,16 @@ The `%container` selector sets the width of the element to the associated contai
 #### Fluid
 The `%fluid` selector simply sets `width: 100%;`. This serves as a means to counteract the `%container` selector at higher breakpoints.
 #### Colors
-These selectors refer to various color related properties. See the following examples for a color defined as `myRed: red`:
+These placeholder classes refer to various color related properties. See the following examples for a color defined as `myRed: red`:
 * `%myRed` = `color: red;`
 * `%myRed-bg` = `background-color: red;`
 * `%myRed-fill` = `fill: red;`
 * `%myRed-stroke` = `stroke: red;`
 ### Fonts
-These selectors refer to the font family and weight. See the following examples for a font defined as `helvetica: (400, 700, 900)`:
+These placeholder classes refer to the font family and weight. See the following examples for a font defined as `helvetica: (400, 700, 900)`:
 * `%helvetica-400` = `font-family: helvetica; font-weight: 400;`
 * `%helvetica-900` = `font-family: helvetica; font-weight: 900;`
 ### Sizes and Line Heights
-These selectors refer to the font-size and line-height css propertues. Currently, there are selectors for sizes and line heights from 1px to 250px.
+These placeholder classes refer to the font-size and line-height css propertues. Currently, there are placeholder classes for sizes and line heights from 1px to 250px.
 * `%s-48` = `font-size: 48px;`
 * `%lh-60` = `line-height: 60px;`

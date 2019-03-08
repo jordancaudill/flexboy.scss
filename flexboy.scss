@@ -8,7 +8,26 @@
     }
 }
 
-@mixin gutter($amount, $breakPointName) {
+@function breakpoint($breakPointName) {
+    @return map-get(map-get($flexboy, breakpoints), $breakPointName);
+}
+
+// @mixin style($breakPointName, $styleMap) {
+//     @if($breakPointName=="null" or $breakPointName=="default" or $breakPointName=="") {
+//         $minWidth: 0px;
+//     }
+//     @else {
+//         $minWidth: map-get($breakpoints, $breakPointName);
+//     }
+//     @media(min-width: $minWidth) {
+//         @each $property,
+//         $value in $styleMap {
+//             $property: $value;
+//         }
+//     }
+// }
+// @include style(md, (width: 200px, height: 250px, border: solid 1px red));
+@mixin gutter($amount, $breakPointName) {    
     @if($breakPointName=="null" or $breakPointName=="default" or $breakPointName=="") {
         $minWidth: 0px;
     }
@@ -22,7 +41,6 @@
         }
     }
 }
-
 @mixin container($subtractPadding, $breakPointName) {
     @if($breakPointName=="null" or $breakPointName=="default" or $breakPointName=="") {
         $minWidth: 0px;
@@ -64,25 +82,12 @@ $selectorList) {
     $fonts: null;
     $zeroMap: (default: 0px);
     $breakpointMap: $zeroMap;
-    @each $property,
-    $value in $flexboy {
-        @if ($property==breakpoints) {
-            $breakpoints: $value;
-            $breakpointMap: map-merge($zeroMap, $breakpoints);
-        }
-        @if ($property==containers) {
-            $containers: $value;
-        }
-        @if ($property==disableDefaultMargins) {
-            $disableDefaultMargins: $value;
-        }
-        @if ($property==colors) {
-            $colors: $value;
-        }
-        @if ($property==fonts) {
-            $fonts: $value;
-        }
-    } // breakpoints and containers
+    $breakpoints: map-get($flexboy, breakpoints);
+    $breakpointMap: map-merge($zeroMap, $breakpoints);
+    $containers: map-get($flexboy, containers);
+    $disableDefaultMargins: map-get($flexboy, disableDefaultMargins);
+    $colors: map-get($flexboy, colors);
+    $fonts: map-get($flexboy, fonts); // breakpoints and containers
     @if($breakpoints !=null) {
         $justifyStates: (start: flex-start, end: flex-end, center: center, between: space-between, around: space-around);
         $alignStates: (start: flex-start, end: flex-end, center: center, baseline: baseline, stretch: stretch);
