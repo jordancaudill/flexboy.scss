@@ -102,7 +102,7 @@ $selectorList) {
                     @for $i from $breakPointIndex to length($breakpointMap)+1 {
                         $containerWidth: nth(map_values($containers), $i);
                         @media(min-width: nth(map_values($breakpointMap), $i)) {
-                            width: #{$containerWidth};
+                            max-width: #{$containerWidth};
                             margin-left: auto;
                             margin-right: auto;
                         }
