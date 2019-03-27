@@ -1,6 +1,6 @@
 // $flexboy: ( breakpoints: (md: 1280px, lg: 1600px), containers: (default: 600px, md: 900px, lg: 1200px), disableDefaultMargins: false, colors: (myRed: red, myBlue: blue), fonts: (poppy: (400, 700, 900)));
 @function getSizedSelector($selector, $breakPointName) {
-    @if($breakPointName=='default'or $breakPointName=='null'or $breakPointName=='') {
+    @if($breakPointName=='default'or $breakPointName==null or $breakPointName=='') {
         @return '#{$selector}';
     }
 
@@ -28,8 +28,8 @@
 //     }
 // }
 // @include style(md, (width: 200px, height: 250px, border: solid 1px red));
-@mixin gutter($amount, $breakPointName) {
-    @if($breakPointName=="null"or $breakPointName=="default"or $breakPointName=="") {
+@mixin gutter($amount, $breakPointName: null) {
+    @if($breakPointName==null or $breakPointName=="default"or $breakPointName=="") {
         $minWidth: 0px;
     }
 
@@ -46,24 +46,32 @@
     }
 }
 
-@mixin container-padding($padding, $breakPointName) {
+@mixin container-padding($padding, $breakPointName: null) {
     $containers: map-get($flexboy, containers);
     $breakpoints: map-get($flexboy, breakpoints);
-    @if($breakPointName=="null"or $breakPointName=="default"or $breakPointName=="") {
+    $minWidth: null;
+    $width: null;
+    @debug($breakpoints);
+
+    @if($breakPointName==null or $breakPointName=="default"or $breakPointName=="") {
         $minWidth: 0px;
         $width: map-get($containers, "default");
     }
+
     @else {
         $minWidth: map-get($breakpoints, $breakPointName);
         $width: map-get($containers, $breakPointName);
     }
 
-    @media(min-width: $minWidth) {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: $padding;
-        padding-right: $padding;
-        max-width: #{calc(#{$width} - (#{$padding}) * 2)
+    @if ($width !=null) {
+        @media(min-width: $minWidth) {
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: $padding;
+            padding-right: $padding;
+            max-width: #{calc(#{$width} - (#{$padding} * 2))
+        }
+
     }
 }
 
