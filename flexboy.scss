@@ -46,32 +46,25 @@
     }
 }
 
-@mixin container-padding($padding, $breakPointName: null) {
+@mixin container-padding($padding, $breakPointName: default) {
     $containers: map-get($flexboy, containers);
     $breakpoints: map-get($flexboy, breakpoints);
-    $minWidth: null;
-    $width: null;
-    @debug($breakpoints);
+    $zeroMap: (default: 0px);
+    $breakpointMap: map-merge($zeroMap, $breakpoints);
+    $breakPointSize: map-get($breakpointMap, $breakPointName);
+    $breakPointIndex: index($breakpointMap, ($breakPointName $breakPointSize));
 
-    @if($breakPointName==null or $breakPointName=="default"or $breakPointName=="") {
-        $minWidth: 0px;
-        $width: map-get($containers, "default");
-    }
+    @for $i from $breakPointIndex to length($breakpointMap)+1 {
+        $minWidth: null;
+        $containerWidth: nth(map_values($containers), $i);
 
-    @else {
-        $minWidth: map-get($breakpoints, $breakPointName);
-        $width: map-get($containers, $breakPointName);
-    }
-
-    @if ($width !=null) {
-        @media(min-width: $minWidth) {
+        @media(min-width: nth(map_values($breakpointMap), $i)) {
             margin-left: auto;
             margin-right: auto;
             padding-left: $padding;
             padding-right: $padding;
-            max-width: #{calc(#{$width} - (#{$padding} * 2))
+            max-width: #{calc(#{$containerWidth} - (#{$padding} * 2))
         }
-
     }
 }
 
