@@ -1,6 +1,6 @@
 {
   "name": "flexboy.scss",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "flexboy.scss is a light-weight scss library, with the purpose of exposing useful SCSS selectors for your project's typical colors, fonts, and flexbox properties.",
   "main": "flexboy.scss",
   "scripts": {},
