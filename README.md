@@ -48,10 +48,9 @@ $flexboy: (
 // @mixin size($breakPointName, $selectorList)
 @include size(md, (row, j-between, col, myRed));
 
-// a mixin to create a container which subtracts width by padding.
-// @mixin container($subtractPadding, $breakPointName)
-padding: 40px;
-@include container(40px, md);
+// a mixin to create a container with included equal padding-left and padding-right
+// @mixin container($padding, $breakPointName)
+@include container-padding(20px, md);
 
 // add gutter between children in a parent
 // @mixin gutter($amount, $breakPointName)
