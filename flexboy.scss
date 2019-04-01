@@ -73,7 +73,7 @@
 @mixin size($breakPointName,
 $selectorList) {
     @each $selector in $selectorList {
-        @extend %#{getSizedSelector(#{$selector},
+        @extend .#{getSizedSelector(#{$selector},
         #{$breakPointName})
     }
 
@@ -108,7 +108,7 @@ $selectorList) {
 
             //container
             @if ($containers !=null) {
-                %#{getSizedSelector('container', $breakPointName)} {
+                .#{getSizedSelector('container', $breakPointName)} {
                     $breakPointIndex: index($breakpointMap, ($breakPointName $breakPointSize));
 
                     @for $i from $breakPointIndex to length($breakpointMap)+1 {
@@ -127,7 +127,7 @@ $selectorList) {
 
                 //direction
                 @each $direction in $directions {
-                    %#{getSizedSelector($direction, $breakPointName)} {
+                    .#{getSizedSelector($direction, $breakPointName)} {
                         display: flex;
                         $flex-dir: $direction;
 
@@ -146,7 +146,7 @@ $selectorList) {
                 //wrap
                 @each $wrapState in $wrapStates {
                     @media(min-width: $breakPointSize) {
-                        %#{getSizedSelector($wrapState, $breakPointName)
+                        .#{getSizedSelector($wrapState, $breakPointName)
 
                     }
 
@@ -159,7 +159,7 @@ $selectorList) {
             //justify-content
             @each $name,
             $state in $justifyStates {
-                %#{getSizedSelector(j-#{$name},
+                .#{getSizedSelector(j-#{$name},
                 $breakPointName)
             }
 
@@ -171,7 +171,7 @@ $selectorList) {
         //align-items
         @each $name,
         $state in $alignStates {
-            %#{getSizedSelector(a-#{$name},
+            .#{getSizedSelector(a-#{$name},
             $breakPointName)
         }
 
@@ -181,7 +181,7 @@ $selectorList) {
     }
 
     //fluid 
-    %#{getSizedSelector('fluid', #{$breakPointName})
+    .#{getSizedSelector('fluid', #{$breakPointName})
 }
 
     {
@@ -198,7 +198,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 
     @media(min-width: $breakPointSize) {
         @media(max-width: $nextPx - 1px) {
-            %#{getSizedSelector('hide', #{$breakPointName})
+            .#{getSizedSelector('hide', #{$breakPointName})
         }
 
             {
@@ -211,7 +211,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 
 @else {
     @media(min-width: $breakPointSize) {
-        %#{getSizedSelector('hide', #{$breakPointName})
+        .#{getSizedSelector('hide', #{$breakPointName})
     }
 
         {
@@ -222,7 +222,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 }
 
 //hide all other sizes
-%#{getSizedSelector('only', #{$breakPointName})
+.#{getSizedSelector('only', #{$breakPointName})
 }
 
     {
@@ -277,14 +277,14 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 
             @each $name,
             $color in $colors {
-                %#{getSizedSelector($name, #{$breakPointName})
+                .#{getSizedSelector($name, #{$breakPointName})
             }
 
                 {
                 color: $color;
             }
 
-            %#{getSizedSelector(#{$name}-bg,
+            .#{getSizedSelector(#{$name}-bg,
             #{$breakPointName})
         }
 
@@ -292,7 +292,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
             background-color: $color;
         }
 
-        %#{getSizedSelector(#{$name}-fill,
+        .#{getSizedSelector(#{$name}-fill,
         #{$breakPointName})
     }
 
@@ -300,7 +300,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
         fill: $color;
     }
 
-    %#{getSizedSelector(#{$name}-stroke,
+    .#{getSizedSelector(#{$name}-stroke,
     #{$breakPointName})
 }
 
@@ -321,7 +321,7 @@ $breakPointName $breakPointSize)+1; //hide at a specific size
 $breakPointSize in $breakpointMap {
     @media(min-width: $breakPointSize) {
         @for $size from 1 through 250 {
-            %#{getSizedSelector(s-#{$size},
+            .#{getSizedSelector(s-#{$size},
             #{$breakPointName})
         }
 
@@ -329,7 +329,7 @@ $breakPointSize in $breakpointMap {
             font-size:#{$size}px;
         }
 
-        %#{getSizedSelector(lh-#{$size},
+        .#{getSizedSelector(lh-#{$size},
         #{$breakPointName})
     }
 
@@ -352,7 +352,7 @@ $breakPointSize in $breakpointMap {
             @each $fontName,
             $fontWeights in $fonts {
                 @each $weight in $fontWeights {
-                    %#{getSizedSelector(#{$fontName}-#{$weight},
+                    .#{getSizedSelector(#{$fontName}-#{$weight},
                     #{$breakPointName})
                 }
 
